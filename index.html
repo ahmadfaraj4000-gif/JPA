@@ -282,6 +282,70 @@ body{background:#0d1a0d;color:var(--text);font-family:'Inter',sans-serif;overflo
   #action-btns{gap:5px;}
   .act-btn{min-width:86px;padding:7px 10px;}
 }
+
+/* Floating gameplay controls: no screen-blocking bottom panel */
+#action-bar{
+  height:190px;
+  padding:0;
+  background:linear-gradient(0deg,rgba(5,10,5,0.36),rgba(5,10,5,0.08) 56%,transparent 100%);
+  pointer-events:none;
+}
+#hotbar{
+  position:absolute;
+  left:50%;
+  bottom:24px;
+  transform:translateX(-50%);
+  margin:0;
+  pointer-events:all;
+}
+#controls{
+  position:absolute;
+  inset:0;
+  display:block;
+  pointer-events:none;
+}
+#joystick-zone{
+  position:absolute;
+  left:24px;
+  bottom:18px;
+  pointer-events:all;
+}
+#action-btns{
+  position:absolute;
+  right:16px;
+  bottom:18px;
+  pointer-events:all;
+}
+
+@media (max-width: 760px) {
+  #action-bar{
+    height:168px;
+    background:linear-gradient(0deg,rgba(5,10,5,0.28),rgba(5,10,5,0.06) 58%,transparent 100%);
+  }
+  #hotbar{bottom:38px;}
+  #joystick-zone{left:14px;bottom:18px;}
+  #action-btns{right:10px;bottom:24px;}
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  #action-bar{height:164px;}
+  #hotbar{
+    left:50%;
+    right:auto;
+    bottom:60px;
+    margin:0;
+    transform:translateX(-50%) scale(0.92);
+  }
+  #joystick-zone{left:16px;bottom:18px;}
+  #action-btns{right:10px;bottom:28px;}
+}
+
+@media (max-width: 760px) and (orientation: landscape) {
+  #action-bar{height:132px;}
+  #hotbar{bottom:14px;transform:translateX(-50%) scale(0.9);}
+  #joystick-zone{left:16px;bottom:14px;}
+  #action-btns{right:12px;bottom:12px;}
+}
 </style>
 </head>
 <body>
