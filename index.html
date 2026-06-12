@@ -18,7 +18,7 @@
   --muted: #5a7a5a;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#0d1a0d;color:var(--text);font-family:'Inter',sans-serif;overflow:hidden;height:100vh;width:100vw;touch-action:none;}
+body{background:#0d1a0d;color:var(--text);font-family:'Inter',sans-serif;overflow:hidden;height:100vh;height:100dvh;width:100vw;touch-action:none;}
 
 #auth-screen{
   position:fixed;inset:0;z-index:1000;
@@ -47,7 +47,7 @@ body{background:#0d1a0d;color:var(--text);font-family:'Inter',sans-serif;overflo
 .auth-err{color:#e05050;font-size:12px;text-align:center;margin-top:10px;min-height:18px;}
 .auth-disclaimer{font-size:10px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.6;}
 
-#game-canvas{display:block;width:100vw;height:100vh;position:fixed;inset:0;}
+#game-canvas{display:block;width:100vw;height:100vh;height:100dvh;position:fixed;inset:0;}
 #hud{position:fixed;inset:0;pointer-events:none;z-index:50;}
 
 /* swipe hint */
@@ -222,6 +222,66 @@ body{background:#0d1a0d;color:var(--text);font-family:'Inter',sans-serif;overflo
 .arena-log{min-height:34px;padding:9px 12px;color:var(--text);font-size:12px;text-align:center;background:rgba(255,255,255,0.04);}
 .arena-actions{display:flex;gap:8px;padding:12px;background:rgba(0,0,0,0.35);}
 .arena-actions .enc-btn{font-size:14px;}
+
+@media (max-width: 760px) {
+  #player-hud{top:8px;left:8px;min-width:150px;padding:8px 10px;border-radius:10px;}
+  .player-name-hud{font-size:16px;}
+  .player-role-hud{font-size:9px;margin-bottom:6px;letter-spacing:1.5px;}
+  .bar-row{gap:5px;margin-bottom:4px;}
+  .bar-label{width:24px;font-size:9px;}
+  .bar-bg{height:6px;}
+  .bar-val{font-size:10px;width:24px;}
+  #area-name{top:8px;font-size:14px;padding:5px 12px;letter-spacing:2px;}
+  #money-hud{top:8px;margin-top:34px;font-size:11px;padding:4px 10px;}
+  #minimap{top:8px;right:8px;width:86px;height:86px;border-radius:10px;}
+  .minimap-label{font-size:8px;bottom:3px;}
+  #side-btns{right:8px;top:50%;gap:6px;}
+  .side-btn{width:38px;height:38px;border-radius:9px;font-size:16px;}
+  #action-bar{padding:8px 8px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(5,10,5,0.9) 38%,rgba(5,10,5,0.48) 72%,transparent);}
+  #hotbar{margin-bottom:6px;gap:6px;justify-content:center;}
+  .hotbar-slot{width:46px;height:46px;border-radius:9px;font-size:18px;background:rgba(255,255,255,0.035);}
+  .hotbar-slot .slot-label{font-size:7px;}
+  #joystick-zone{width:108px;height:108px;}
+  #joystick-base{width:92px;height:92px;}
+  #joystick-knob{width:38px;height:38px;}
+  #controls{align-items:flex-end;}
+  #action-btns{gap:6px;}
+  .act-btn{padding:9px 12px;font-size:12px;min-width:92px;border-radius:9px;}
+  #combat-log{left:8px;bottom:142px;width:170px;}
+  .clog-entry{font-size:10px;padding:3px 5px;}
+  #notif{top:58px;font-size:12px;max-width:220px;padding:8px 12px;}
+}
+
+@media (max-width: 760px) and (orientation: portrait) {
+  #player-hud{min-width:132px;max-width:42vw;padding:7px 9px;}
+  #minimap{width:78px;height:78px;}
+  #area-name{max-width:38vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  #money-hud{margin-top:32px;}
+  #side-btns{top:45%;right:6px;gap:5px;}
+  .side-btn{width:36px;height:36px;font-size:15px;}
+  #hotbar{justify-content:flex-start;margin-left:36vw;margin-right:92px;}
+  .hotbar-slot{width:42px;height:42px;}
+  #joystick-zone{width:104px;height:104px;}
+  #joystick-base{width:88px;height:88px;}
+  #action-btns{position:absolute;right:8px;bottom:calc(14px + env(safe-area-inset-bottom));}
+  .act-btn{min-width:86px;padding:9px 10px;}
+  #combat-log{display:none;}
+}
+
+@media (max-width: 760px) and (orientation: landscape) {
+  #player-hud{transform:scale(0.86);transform-origin:top left;}
+  #minimap{transform:scale(0.9);transform-origin:top right;}
+  #area-name{transform:translateX(-50%) scale(0.9);transform-origin:top center;}
+  #money-hud{transform:translateX(-50%) scale(0.9);transform-origin:top center;}
+  #side-btns{display:grid;grid-template-columns:repeat(2,36px);top:50%;right:8px;}
+  .side-btn{width:36px;height:36px;}
+  #hotbar{margin-bottom:4px;}
+  .hotbar-slot{width:42px;height:42px;}
+  #joystick-zone{width:96px;height:96px;}
+  #joystick-base{width:82px;height:82px;}
+  #action-btns{gap:5px;}
+  .act-btn{min-width:86px;padding:7px 10px;}
+}
 </style>
 </head>
 <body>
@@ -478,7 +538,7 @@ const FIREBASE_HOOK = {
 
 function createNewPlayer(username, role, skin) {
   const rb = { farmer:{hp:100,atk:8,def:5,spd:1.0,money:300}, blacksmith:{hp:110,atk:15,def:10,spd:0.9,money:200}, hunter:{hp:90,atk:18,def:6,spd:1.2,money:250}, merchant:{hp:80,atk:6,def:4,spd:1.0,money:500}, outlaw:{hp:95,atk:20,def:7,spd:1.1,money:150} }[role] || {hp:100,atk:8,def:5,spd:1.0,money:300};
-  return { username, role, skin:parseInt(skin), hp:rb.hp, maxHp:rb.hp, stamina:100, maxSta:100, hunger:80, atk:rb.atk, def:rb.def, spd:rb.spd, money:rb.money, xp:0, level:1, inventory:{}, equipped:{weapon:null,chest:null,head:null,feet:null}, buildings:[], tesla:{x:6,z:5,rot:Math.PI/2}, pos:{x:0,z:0}, onHorse:false, inTesla:false, kills:0, area:'Kingston Market' };
+  return { username, role, skin:parseInt(skin), hp:rb.hp, maxHp:rb.hp, stamina:100, maxSta:100, hunger:80, atk:rb.atk, def:rb.def, spd:rb.spd, money:rb.money, xp:0, level:1, inventory:{}, equipped:{weapon:null,chest:null,head:null,feet:null}, buildings:[], tesla:{x:6,z:5,rot:Math.PI/2,speed:0}, pos:{x:0,z:0}, onHorse:false, inTesla:false, kills:0, area:'Kingston Market' };
 }
 
 let currentPlayer = null, activeSlot = 0, currentEncounter = null, arenaState = null;
@@ -508,6 +568,9 @@ let playerMesh, horseMesh, teslaMesh, encounterEnemyMesh;
 let worldObjects = [];
 let buildingMeshes = [];
 let townNpcs = [];
+let teslaParts = {frontWheels:[],wheelSpinners:[],driverDoor:null};
+let teslaControl = {throttle:0,steer:0};
+let teslaEntering = false;
 let playerParts = {};
 let playerMoving = false;
 let walkClock = 0;
@@ -549,6 +612,7 @@ function initThree() {
 
   // ── Touch & mouse camera swipe (world canvas only) ──
   setupCameraSwipe(canvas);
+  setupTeslaTap(canvas);
 
   window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth/window.innerHeight;
@@ -629,6 +693,24 @@ function setupCameraSwipe(canvas) {
   }, { passive:true });
 }
 
+function setupTeslaTap(canvas) {
+  const raycaster=new THREE.Raycaster();
+  const pointer=new THREE.Vector2();
+  let down=null;
+  canvas.addEventListener('pointerdown', e => { down={x:e.clientX,y:e.clientY}; }, {passive:true});
+  canvas.addEventListener('pointerup', e => {
+    if(!down||!teslaMesh||!camera)return;
+    if(Math.hypot(e.clientX-down.x,e.clientY-down.y)>10){down=null;return;}
+    const rect=canvas.getBoundingClientRect();
+    pointer.x=((e.clientX-rect.left)/rect.width)*2-1;
+    pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;
+    raycaster.setFromCamera(pointer,camera);
+    const hits=raycaster.intersectObject(teslaMesh,true);
+    if(hits.length)toggleTesla();
+    down=null;
+  }, {passive:true});
+}
+
 function updateCamera3d() {
   if (!playerMesh) return;
   if (currentPlayer?.inTesla && teslaMesh) {
@@ -670,8 +752,9 @@ function updateCamera3d() {
 
   function setStickVisual(cx, cy) {
     const zr = zone.getBoundingClientRect();
-    const x = Math.max(55, Math.min(zr.width-55, cx-zr.left));
-    const y = Math.max(55, Math.min(zr.height-55, cy-zr.top));
+    const pad = Math.min(55, zr.width/2, zr.height/2);
+    const x = Math.max(pad, Math.min(zr.width-pad, cx-zr.left));
+    const y = Math.max(pad, Math.min(zr.height-pad, cy-zr.top));
     base.style.left = `${x}px`;
     base.style.top = `${y}px`;
     knob.style.left = `${x}px`;
@@ -706,6 +789,8 @@ function updateCamera3d() {
     active = false;
     activeTouchId = null;
     playerMoving = false;
+    teslaControl.throttle = 0;
+    teslaControl.steer = 0;
     jdx = 0; jdz = 0;
     knob.style.transition = 'transform 0.15s';
     knob.style.transform  = 'translate(-50%, -50%)';
@@ -772,18 +857,8 @@ function applyJoystick(jx, jz) {
   let moveZ = (fwdZ * (-jz) + rgtZ * jx) * speed;
 
   if (currentPlayer.inTesla) {
-    if (Math.abs(jx)>0.08) currentPlayer.tesla.rot -= jx*0.055;
-    const throttle=-jz;
-    const driveSpeed=0.95*throttle;
-    moveX=Math.sin(currentPlayer.tesla.rot||0)*driveSpeed;
-    moveZ=Math.cos(currentPlayer.tesla.rot||0)*driveSpeed;
-    currentPlayer.tesla.x = Math.max(-WORLD_SIZE, Math.min(WORLD_SIZE, currentPlayer.tesla.x + moveX));
-    currentPlayer.tesla.z = Math.max(-WORLD_SIZE, Math.min(WORLD_SIZE, currentPlayer.tesla.z + moveZ));
-    currentPlayer.pos.x = currentPlayer.tesla.x;
-    currentPlayer.pos.z = currentPlayer.tesla.z;
-    updatePlayerPosition();
-    updateArea();
-    drawMinimap();
+    teslaControl.throttle = Math.max(-1, Math.min(1, -jz));
+    teslaControl.steer = Math.max(-1, Math.min(1, jx));
     return;
   }
 
@@ -820,7 +895,7 @@ setInterval(() => {
   if (keysDown['ArrowLeft'] || keysDown['a']) jx=-1;
   if (keysDown['ArrowRight']|| keysDown['d']) jx= 1;
   if (jx||jz) applyJoystick(jx, jz);
-  else playerMoving=false;
+  else { playerMoving=false; if(currentPlayer.inTesla){teslaControl.throttle=0;teslaControl.steer=0;} }
 }, 50);
 
 function updatePlayerPosition() {
@@ -836,6 +911,28 @@ function updatePlayerPosition() {
   const mesh = currentPlayer.onHorse ? horseMesh : playerMesh;
   if (!currentPlayer.inTesla) mesh.position.set(p.x, Math.sin(Date.now()*0.008)*0.06, p.z);
   animatePlayerWalk();
+}
+
+function updateTeslaDrive(){
+  if(!currentPlayer?.inTesla||!teslaMesh||teslaEntering)return;
+  const t=currentPlayer.tesla;
+  const accel=0.035;
+  const maxSpeed=0.72;
+  const friction=0.94;
+  t.speed=(t.speed||0)+teslaControl.throttle*accel;
+  t.speed=Math.max(-maxSpeed*0.45,Math.min(maxSpeed,t.speed));
+  if(Math.abs(teslaControl.throttle)<0.05)t.speed*=friction;
+  if(Math.abs(t.speed)<0.004)t.speed=0;
+  const steerAmount=teslaControl.steer*0.55;
+  t.rot-=steerAmount*Math.min(1,Math.abs(t.speed)/0.35)*0.055*Math.sign(t.speed||1);
+  t.x=Math.max(-WORLD_SIZE,Math.min(WORLD_SIZE,t.x+Math.sin(t.rot)*t.speed));
+  t.z=Math.max(-WORLD_SIZE,Math.min(WORLD_SIZE,t.z+Math.cos(t.rot)*t.speed));
+  currentPlayer.pos.x=t.x;
+  currentPlayer.pos.z=t.z;
+  teslaParts.frontWheels.forEach(w=>{w.rotation.y=steerAmount;});
+  teslaParts.wheelSpinners.forEach(w=>{w.rotation.x+=t.speed*1.8;});
+  updateArea();
+  drawMinimap();
 }
 
 function updateArea() {
@@ -1021,6 +1118,7 @@ function rebuildSavedBuildings(){
 
 function createTeslaMesh(){
   const car=new THREE.Group();
+  teslaParts={frontWheels:[],wheelSpinners:[],driverDoor:null};
   const paint=new THREE.MeshLambertMaterial({color:0xffffff});
   const glass=new THREE.MeshLambertMaterial({color:0x0b1220,transparent:true,opacity:0.86});
   const trim=new THREE.MeshLambertMaterial({color:0x111111});
@@ -1052,13 +1150,26 @@ function createTeslaMesh(){
     car.add(makeBox(0.04,0.035,0.42,0xcfd8dc,side*1.16,0.72,-0.72));
     car.add(makeBox(0.05,0.28,2.55,0x111111,side*1.19,0.39,0));
   });
+  const driverDoor=new THREE.Group();
+  driverDoor.position.set(-1.22,0.62,0.42);
+  const doorPanel=makeBox(0.06,0.5,1.15,0xfafafa,0,0,0);
+  driverDoor.add(doorPanel);
+  car.add(driverDoor);
+  teslaParts.driverDoor=driverDoor;
   [-1.15,1.15].forEach(x=>[-1.46,1.46].forEach(z=>{
+    const steerPivot=new THREE.Group();
+    steerPivot.position.set(x,0.34,z);
+    const wheelSpin=new THREE.Group();
     const tire=new THREE.Mesh(new THREE.CylinderGeometry(0.34,0.34,0.28,24),trim);
-    tire.position.set(x,0.34,z); tire.rotation.z=Math.PI/2; tire.castShadow=true; car.add(tire);
+    tire.rotation.z=Math.PI/2; tire.castShadow=true; wheelSpin.add(tire);
     const rim=new THREE.Mesh(new THREE.CylinderGeometry(0.21,0.21,0.3,10),new THREE.MeshLambertMaterial({color:0xe5e7eb}));
-    rim.position.set(x,0.34,z); rim.rotation.z=Math.PI/2; car.add(rim);
+    rim.rotation.z=Math.PI/2; wheelSpin.add(rim);
     const hub=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,0.32,12),new THREE.MeshLambertMaterial({color:0x8b949e}));
-    hub.position.set(x,0.34,z); hub.rotation.z=Math.PI/2; car.add(hub);
+    hub.rotation.z=Math.PI/2; wheelSpin.add(hub);
+    steerPivot.add(wheelSpin);
+    car.add(steerPivot);
+    teslaParts.wheelSpinners.push(wheelSpin);
+    if(z>0)teslaParts.frontWheels.push(steerPivot);
   }));
   const noseBadge=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.12,0.015),new THREE.MeshBasicMaterial({color:0xd32f2f}));
   noseBadge.position.set(0,0.86,2.45); car.add(noseBadge);
@@ -1248,6 +1359,7 @@ function renderLoop() {
   requestAnimationFrame(renderLoop);
   worldObjects.forEach(o=>{ if(o.userData.cloud) o.position.x+=0.002; });
   animateTownLife();
+  updateTeslaDrive();
   updatePlayerPosition();
   updateCamera3d();
   renderer3d.render(scene, camera);
@@ -1286,7 +1398,8 @@ function ensurePlayerDefaults(player){
   player.inventory=player.inventory||{};
   player.equipped=player.equipped||{weapon:null,chest:null,head:null,feet:null};
   player.buildings=Array.isArray(player.buildings)?player.buildings:[];
-  player.tesla=player.tesla||{x:6,z:5,rot:Math.PI/2};
+  player.tesla=player.tesla||{x:6,z:5,rot:Math.PI/2,speed:0};
+  player.tesla.speed=player.tesla.speed||0;
   player.pos=player.pos||{x:0,z:0};
   player.inTesla=!!player.inTesla;
   return player;
@@ -1299,22 +1412,73 @@ function giveGun(){
   showNotif('🔫 Gun added and equipped.');
   updateHUD(); renderEquipPanel(); savePlayer();
 }
+function wait(ms){return new Promise(resolve=>setTimeout(resolve,ms));}
+function carLocalToWorld(x,z){
+  const t=currentPlayer.tesla, r=t.rot||0;
+  return {x:t.x+x*Math.cos(r)+z*Math.sin(r),z:t.z-x*Math.sin(r)+z*Math.cos(r)};
+}
+async function animateTeslaDoor(open){
+  if(!teslaParts.driverDoor)return;
+  const start=teslaParts.driverDoor.rotation.y;
+  const end=open?1.15:0;
+  for(let i=1;i<=10;i++){
+    const k=i/10;
+    teslaParts.driverDoor.rotation.y=start+(end-start)*k;
+    await wait(18);
+  }
+}
+async function enterTeslaSequence(){
+  if(teslaEntering)return;
+  teslaEntering=true;
+  currentPlayer.tesla.speed=0;
+  teslaControl.throttle=0;
+  teslaControl.steer=0;
+  currentPlayer.onHorse=false;
+  const doorSpot=carLocalToWorld(-1.95,0.35);
+  currentPlayer.pos.x=doorSpot.x;
+  currentPlayer.pos.z=doorSpot.z;
+  playerMesh.rotation.y=currentPlayer.tesla.rot+Math.PI/2;
+  updatePlayerPosition();
+  await animateTeslaDoor(true);
+  await wait(180);
+  currentPlayer.inTesla=true;
+  currentPlayer.pos.x=currentPlayer.tesla.x;
+  currentPlayer.pos.z=currentPlayer.tesla.z;
+  updatePlayerPosition();
+  await animateTeslaDoor(false);
+  teslaEntering=false;
+  showNotif('🚗 You got in the white Model S.');
+  savePlayer();
+}
+async function exitTeslaSequence(){
+  if(teslaEntering)return;
+  teslaEntering=true;
+  currentPlayer.tesla.speed=0;
+  teslaControl.throttle=0;
+  teslaControl.steer=0;
+  currentPlayer.inTesla=false;
+  await animateTeslaDoor(true);
+  const doorSpot=carLocalToWorld(-2.05,0.15);
+  currentPlayer.pos.x=doorSpot.x;
+  currentPlayer.pos.z=doorSpot.z;
+  camAngleH=currentPlayer.tesla.rot||camAngleH;
+  playerMesh.rotation.y=currentPlayer.tesla.rot+Math.PI/2;
+  updatePlayerPosition();
+  await wait(180);
+  await animateTeslaDoor(false);
+  teslaEntering=false;
+  showNotif('🚶 You got out of the Model S.');
+  drawMinimap(); savePlayer();
+}
 function toggleTesla(){
   if(!currentPlayer||!teslaMesh)return;
+  if(teslaEntering)return;
   if(currentPlayer.inTesla){
-    currentPlayer.inTesla=false;
-    currentPlayer.pos.x=currentPlayer.tesla.x+Math.sin((currentPlayer.tesla.rot||0)+Math.PI/2)*1.8;
-    currentPlayer.pos.z=currentPlayer.tesla.z+Math.cos((currentPlayer.tesla.rot||0)+Math.PI/2)*1.8;
-    camAngleH=currentPlayer.tesla.rot||camAngleH;
-    showNotif('🚶 Got out of the white Model S.');
+    exitTeslaSequence();
   } else {
     const d=Math.hypot(currentPlayer.pos.x-currentPlayer.tesla.x,currentPlayer.pos.z-currentPlayer.tesla.z);
     if(d>8){showNotif('🚗 Move closer to the white Model S first.');return;}
-    currentPlayer.inTesla=true;
-    currentPlayer.onHorse=false;
-    currentPlayer.pos.x=currentPlayer.tesla.x;
-    currentPlayer.pos.z=currentPlayer.tesla.z;
-    showNotif('🚗 Driving the white Model S. POV switched to the car.');
+    enterTeslaSequence();
   }
   updatePlayerPosition(); drawMinimap(); savePlayer();
 }
